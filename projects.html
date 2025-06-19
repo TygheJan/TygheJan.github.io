@@ -1,0 +1,88 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Python Project</title>
+        <link rel="stylesheet" href="projects.css">
+        <link rel="icon" href="images/icon.jpg" type="image/jpeg" />
+    </head>
+    <body>
+        <header>
+            <h1>Lego Mindstorms - Python</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html#about" class="tooltip" data-tooltip="Over mij">About</a></li>
+                    <li><a href="index.html#contact" class="tooltip" data-tooltip="Neem contact met mij op!">Contact</a></li>
+                    <li><a href="index.html#projecten" class="tooltip" data-tooltip="Ga naar mijn projecten">Projecten</a></li>
+                    <li><a href="index.html#hobbies" class="tooltip" data-tooltip="Koken is leuk!">Hobbies</a></li>
+                    <li><a href="index.html#studie" class="tooltip" data-tooltip="Alfa-college">Studie</a></li>
+                    <li><a href="index.html#certificaten" class="tooltip" data-tooltip="Lijst met onlangs behaalde certificaten">Certificaten</a></li>
+                    <li><a href="index.html#werk" class="tooltip" data-tooltip="Action Wolvega">Werk</a></li>
+                </ul>
+            </nav>
+        </header>
+        <h2 id="pythontitle">Voorbeeld</h2>
+        <hr>
+        <p class="bio">Wij hebben in groepjes van 4 een LEGO&copy; Mindstorms robot geprogrameerd om een lijn te volgen met Python We hebben de sensors geconfigureerd en hiermee de robot een gekleurde lijn laten volgen.</p>
+        <pre>
+        <code>
+        from mindstorms import MSHub, MotorPair, ColorSensor
+        import time
+
+        hub = MSHub()
+        motors = MotorPair('A', 'C')
+        color_sensor = ColorSensor('E')
+        # motor_links = Motor('C')
+        # motor_rechts = Motor('A')
+
+        WHITE = "white"
+        GREEN = "green"
+        YELLOW = "yellow"
+        BLACK = "black"
+
+        last_color = None
+
+        while True:
+            color = color_sensor.get_color()
+            print("Detected color value: " + str(color))
+
+            if color == WHITE:
+                print("Start detected (White)")
+                motors.start(25, 25)
+                time.sleep(1)
+                motors.stop()
+
+            elif color == GREEN:
+                print("Green detected")
+                motors.start(25, 1) # motors.start(20, 40)
+                time.sleep(1)
+                motors.stop()
+
+            elif color == YELLOW:
+                print("Yellow detected")
+                motors.start(25, -25)
+                time.sleep(1)
+                motors.stop()
+
+            elif color == BLACK:
+                print("Black detected")
+                motors.start(5, 5)
+                time.sleep(1)
+                motors.stop()
+            else:
+                print("Other detected")
+        </code>
+        </pre>
+        <footer>
+            <div>
+                <p>&copy; 2025 Tyghe-Jan - Alle rechten voorbehouden</p>
+                <p>
+                    <a href="mailto:tj.bosma@student.alfa-college.nl" title="Open email">Stuur email</a></li> | 
+                    <a href="tel:0641887225">Bel Tyghe-Jan</a>
+                </p>
+            </div>
+        </footer>
+        <script src="script.js"></script>
+    </body>
+</html>

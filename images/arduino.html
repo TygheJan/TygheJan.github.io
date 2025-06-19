@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino Project</title>
+    <link rel="stylesheet" href="arduino.css">
+    <link rel="icon" href="images/icon.jpg" type="image/jpeg" />
+</head>
+<body>
+    <header>
+        <h1>Arduino (Hardware & C++)</h1>
+        <nav>                
+            <ul>
+                <li><a href="index.html#about" class="tooltip" data-tooltip="Over mij">About</a></li>
+                <li><a href="index.html#contact" class="tooltip" data-tooltip="Neem contact met mij op!">Contact</a></li>
+                <li><a href="index.html#projecten" class="tooltip" data-tooltip="Ga naar mijn projecten">Projecten</a></li>
+                <li><a href="index.html#hobbies" class="tooltip" data-tooltip="Koken is leuk!">Hobbies</a></li>
+                <li><a href="index.html#studie" class="tooltip" data-tooltip="Alfa-college">Studie</a></li>
+                <li><a href="index.html#certificaten" class="tooltip" data-tooltip="Lijst met onlangs behaalde certificaten">Certificaten</a></li>
+                <li><a href="index.html#werk" class="tooltip" data-tooltip="Action Wolvega">Werk</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h2 id="unitytitle">Inspirate</h2>
+    <hr>
+    <p class="bio">De eerste week van mijn opleiding begonnen we met de basis, het programmeren van Arduino's. Dit vond ik heel intressant en hier groeide mijn interesse in programmeren. <br> Eerst alleen het laten branden van een paar lampjes.<p>
+    <div id="center">
+        <img src="images/arduinoleds.jpg">
+    </div>
+    <p class="bio">Later begonnen we al met het combineren van sensoren. Ook mochten we een 'Stoplighten senario' programmeren, dit deden we met buttons voor 'autos' en voor zogenaamde 'wandelaars' voor de oversteek punten.</p>
+    <hr>
+    <h2>Eindopdracht</h2>
+    <p class="bio">Als eindopdracht moesten we een thermometer maken. <br>Hieronder ziet u de code die ik heb gebruikt voor mijn eindproject.</p>
+    <pre>
+<code class="language-cpp">
+int tempPin = A0;         // temperatuursensor op analoge pin A0
+float tempC;              // variabele voor temperatuur in Celsius
+
+int Led1 = 8;             // LED 1 pin (voor het eerste display)
+int Led2 = 7;             // LED 2 pin (voor het tweede display)
+int Led3 = 6;             // LED 3 pin (voor het derde display)
+
+void setup() {
+    Serial.begin(9600);
+    pinMode(Led1, OUTPUT);  // zet LED 1 als output (tientallen)
+    pinMode(Led2, OUTPUT);  // zet LED 2 als output (eenheden)
+    pinMode(Led3, OUTPUT);  // zet LED 3 als output (decimalen)
+    pinMode(2, OUTPUT);
+    pinMode(3, OUTPUT);
+    pinMode(4, OUTPUT);
+    pinMode(5, OUTPUT);
+    pinMode(6, OUTPUT);
+    pinMode(7, OUTPUT);
+    pinMode(8, OUTPUT);
+    pinMode(9, OUTPUT);
+    pinMode(10, OUTPUT);
+    pinMode(11, OUTPUT);
+}
+
+void loop() {
+    // lees de waarde temperatuursensor
+    int sensorValue = analogRead(tempPin);
+    tempC = ((sensorValue * 5.0 * 100.0) / 1024.0) - 6; // Omrekenformule naar Celsius
+
+    Serial.print("Temperatuur: ");
+    Serial.print(tempC);
+    Serial.println(" °C");
+
+    // waardes
+    int tens = (int)tempC / 10;          // honderden plaats (eerste cijfer)
+    int ones = ((int)tempC) % 10;        // tientallen plaats (tweede cijfer)
+    int decimals = (int)((tempC - (int)tempC) * 10);  // De decimale cijfers (derde cijfer)
+
+    // weergeven
+    display(tens, 1);      // eerste display toont de tientallen (bijv. 2)
+    delay(10);           // wacht 1 seconde om de tientallen weer te geven
+
+    display(ones, 2);      // tweede display toont de eenheden (bijv. 2)
+    delay(10);           // wacht 1 seconde om de eenheden weer te geven
+
+    display(decimals, 3);  // derde display toont de decimalen (bijv. 3)
+    delay(1000);           // wacht 1 seconde om de decimalen weer te geven
+}
+
+// functie om alle displays uit te zetten
+void Ledsoff() {
+    digitalWrite(Led1, LOW);
+    digitalWrite(Led2, LOW);
+    digitalWrite(Led3, LOW);
+}
+
+// functie om het cijfer op een specifiek display te tonen
+void display(int number, int WhichLed) {
+    Ledsoff();  // zet eerst alles uit voordat we iets veranderen
+
+    // zet het juiste cijfer op de display
+    switch (number) {
+        case 0:
+            digitalWrite(2, LOW);  // 0
+            digitalWrite(3, LOW);
+            digitalWrite(4, LOW);
+            digitalWrite(5, LOW);
+            break;
+        case 1:
+            digitalWrite(2, HIGH);  // 1
+            digitalWrite(3, LOW);
+            digitalWrite(4, LOW);
+            digitalWrite(5, LOW);
+            break;
+        case 2:
+            digitalWrite(2, LOW);  // 2
+            digitalWrite(3, HIGH);
+            digitalWrite(4, LOW);
+            digitalWrite(5, LOW);
+            break;
+        case 3:
+            digitalWrite(2, HIGH);  // 3
+            digitalWrite(3, HIGH);
+            digitalWrite(4, LOW);
+            digitalWrite(5, LOW);
+            break;
+        case 4:
+            digitalWrite(2, LOW);  // 4
+            digitalWrite(3, LOW);
+            digitalWrite(4, HIGH);
+            digitalWrite(5, LOW);
+            break;
+        case 5:
+            digitalWrite(2, HIGH);  // 5
+            digitalWrite(3, LOW);
+            digitalWrite(4, HIGH);
+            digitalWrite(5, LOW);
+            break;
+        case 6:
+            digitalWrite(2, LOW);  // 6
+            digitalWrite(3, HIGH);
+            digitalWrite(4, HIGH);
+            digitalWrite(5, LOW);
+            break;
+        case 7:
+            digitalWrite(2, HIGH);  // 7
+            digitalWrite(3, HIGH);
+            digitalWrite(4, HIGH);
+            digitalWrite(5, LOW);
+            break;
+        case 8:
+            digitalWrite(2, LOW);  // 8
+            digitalWrite(3, LOW);
+            digitalWrite(4, LOW);
+            digitalWrite(5, HIGH);
+            break;
+        case 9:
+            digitalWrite(2, HIGH);  // 9
+            digitalWrite(3, LOW);
+            digitalWrite(4, LOW);
+            digitalWrite(5, HIGH);
+            break;
+    }
+
+    // Kies de juiste display (digit)
+    switch (WhichLed) {
+        case 1:
+            delay(50);  // Kleine delay om te voorkomen dat de displays elkaar beïnvloeden
+            digitalWrite(Led1, HIGH);  // zet de eerste LED aan
+            break;
+        case 2:
+            delay(50);
+            digitalWrite(Led2, HIGH);  // zet de tweede LED aan
+            break;
+        case 3:
+            delay(50);
+            digitalWrite(Led3, HIGH);  // zet de derde LED aan
+            break;
+    }
+}
+</code>
+    </pre>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <footer>
+        <div>
+            <p>&copy; 2025 Tyghe-Jan - Alle rechten voorbehouden</p>
+            <p>
+                <a href="mailto:tj.bosma@student.alfa-college.nl" title="Open email">Stuur email</a></li> | 
+                <a href="tel:0641887225">Bel Tyghe-Jan</a>
+            </p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    </body>
+</html>

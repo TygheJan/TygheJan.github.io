@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Unity Project</title>
+        <link rel="stylesheet" href="unity.css">
+        <link rel="icon" href="images/icon.jpg" type="image/jpeg" />
+    </head>
+    <body>
+        <header>
+            <h1>2D Game-Development in Unity</h1>
+            <nav>                
+                <ul>
+                    <li><a href="index.html#about" class="tooltip" data-tooltip="Over mij">About</a></li>
+                    <li><a href="index.html#contact" class="tooltip" data-tooltip="Neem contact met mij op!">Contact</a></li>
+                    <li><a href="index.html#projecten" class="tooltip" data-tooltip="Ga naar mijn projecten">Projecten</a></li>
+                    <li><a href="index.html#hobbies" class="tooltip" data-tooltip="Koken is leuk!">Hobbies</a></li>
+                    <li><a href="index.html#studie" class="tooltip" data-tooltip="Alfa-college">Studie</a></li>
+                    <li><a href="index.html#certificaten" class="tooltip" data-tooltip="Lijst met onlangs behaalde certificaten">Certificaten</a></li>
+                    <li><a href="index.html#werk" class="tooltip" data-tooltip="Action Wolvega">Werk</a></li>
+                </ul>
+            </nav>
+        </header>
+        <h2 class="leftswipe" id="unitytitle">Sprites, Physics en Collisions</h2>
+        <hr>
+        <p class="bio">Deze module over Unity 2D gameontwikkeling bevatte de basis, sprites, physics, collisions en belighting.<br>Met behulp van javascript heb ik de objecten laten bewegen zoals te zien <a href="#center">hier</a>, je kan de diamand besturen met de pijltjes toetsen en de bal valt met zwaartekracht naar beneden.<p>
+        <div id="center">
+            <img src="images/unity.gif">
+        </div>
+        <hr>
+        <p class="bio">Dit is een zelfstandig project dat <u>niet verplicht</u> is voor de opleiding, meer het lijkt mij intressant om meer te weten te komen over Game-Development. </p>
+        <pre>
+<code class="language-csharp">using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    public float diamondSpeed = 5f;
+    private GameObject square;
+    private GameObject circle;
+    private GameObject diamond;
+    private GameObject isometricDiamond;
+
+    void Start()
+    {
+        square = GameObject.Find("Square"); //start
+        circle = GameObject.Find("Circle");
+        diamond = GameObject.Find("Diamond");
+        isometricDiamond = GameObject.Find("IsometricDiamond");
+        if (square != null)
+        {
+            square.GetComponent<SpriteRenderer>().color = Color.red;
+        }
+        if (circle != null)
+        {
+            circle.transform.localScale = new Vector3(2f, 2f, 1f); 
+        }
+    }
+
+    void Update()
+    {
+        if (diamond != null)
+        {
+            //beweging pijltjes
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            diamond.transform.Translate(Vector3.right * moveHorizontal * diamondSpeed * Time.deltaTime);
+        }
+
+        if (isometricDiamond != null)
+        {
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
+            isometricDiamond.transform.Translate(new Vector3(moveHorizontal, moveVertical, 0) * diamondSpeed * Time.deltaTime);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject == square)
+        {
+            square.transform.Translate(Vector3.up * 5f);
+        }
+    }
+}
+</code>
+        </pre>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+        <footer>
+            <div>
+                <p>&copy; 2025 Tyghe-Jan - Alle rechten voorbehouden</p>
+                <p>
+                    <a href="mailto:tj.bosma@student.alfa-college.nl" title="Open email">Stuur email</a></li> | 
+                    <a href="tel:0641887225">Bel Tyghe-Jan</a>
+                </p>
+            </div>
+        </footer>
+        <script src="script.js"></script>
+    </body>
+</html>
