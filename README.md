@@ -11,7 +11,7 @@ Thank you for visiting!
 
 
 
-Nederlands:
+## Nederlands:
 Welkom bij de repository van mijn eigen cv website!
 
 Let op:
